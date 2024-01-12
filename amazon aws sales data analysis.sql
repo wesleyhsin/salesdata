@@ -20,14 +20,7 @@ Group by customer, industry
 HAVING overall_total_profit < 0
 order by overall_total_profit;
 
-SELECT COUNT(customer) as number_of_customer, 
-	discount,
-	ROUND(SUM(sales * 1000 )) as overall_total_sales,
-	ROUND(SUM(profit * 1000)) as overall_total_profit,
-	ROUND((SUM(profit * 1000)) / ROUND(SUM(sales * 1000 ))*100, 2) as profit_percentage
-FROM aws_salesdata.`saas-sales`
-GROUP BY discount
-ORDER BY discount desc;
+## Calculating total sales and profit at each discount group
 
 SELECT COUNT(customer) as number_of_customer, 
 	discount,
