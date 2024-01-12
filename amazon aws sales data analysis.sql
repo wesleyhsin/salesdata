@@ -1,4 +1,5 @@
-SELECT country,
+## Worst Performing contracts by industry in each country
+SELECT  country,
 	industry,
 	ROUND(SUM(sales * 1000 )) as overall_total_sales,
 	ROUND(SUM(profit * 1000)) as overall_total_profit,
@@ -8,7 +9,9 @@ Group BY country, industry
 Having profit_percentage < 0
 order by country, profit_percentage;
 
-SELECT customer, industry,
+## Contracts that loses money for AWS by customers
+
+SELECT  customer, industry,
 	ROUND(SUM(sales * 1000 )) as overall_total_sales,
 	ROUND(SUM(profit * 1000)) as overall_total_profit,
 	ROUND((SUM(profit * 1000)) / ROUND(SUM(sales * 1000 ))*100, 2) as profit_percentage
