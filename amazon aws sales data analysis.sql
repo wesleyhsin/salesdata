@@ -96,5 +96,37 @@ ORDER BY profit;
 UPDATE`saas-sales`
 SET `order date` = DATE_FORMAT(STR_TO_DATE(`order date`, '%m/%d/%Y'), '%Y-%m-%d');
 
+## Total sales by each quarter of the year
+SELECT
+    YEAR(`Order Date`) AS `Year`,
+    ROUND(SUM(CASE WHEN EXTRACT(QUARTER FROM `Order Date`) = 1 THEN sales * 1000 ELSE 0 END)) AS Quarter1,
+    ROUND(SUM(CASE WHEN EXTRACT(QUARTER FROM `Order Date`) = 2 THEN sales * 1000 ELSE 0 END)) AS Quarter2,
+    ROUND(SUM(CASE WHEN EXTRACT(QUARTER FROM `Order Date`) = 3 THEN sales * 1000 ELSE 0 END)) AS Quarter3,
+    ROUND(SUM(CASE WHEN EXTRACT(QUARTER FROM `Order Date`) = 4 THEN sales * 1000 ELSE 0 END)) AS Quarter4
+FROM
+    aws_salesdata.`saas-sales`
+GROUP BY
+    Year(`Order Date`);
+
+## Monthly sales of each year
+SELECT year(`order date`) as year, `contact name`,
+	ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 1 THEN sales * 1000 ELSE 0 END)) AS Jan,
+	ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 2 THEN sales * 1000 ELSE 0 END)) AS Feb,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 3 THEN sales * 1000 ELSE 0 END)) AS March,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 4 THEN sales * 1000 ELSE 0 END)) AS April,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 5 THEN sales * 1000 ELSE 0 END)) AS May,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 6 THEN sales * 1000 ELSE 0 END)) AS June,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 7 THEN sales * 1000 ELSE 0 END)) AS July,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 8 THEN sales * 1000 ELSE 0 END)) AS August,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 9 THEN sales * 1000 ELSE 0 END)) AS Sept,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 10 THEN sales * 1000 ELSE 0 END)) AS Oct,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 11 THEN sales * 1000 ELSE 0 END)) AS Nov,
+    ROUND(SUM(CASE WHEN EXTRACT(Month FROM `Order Date`) = 12 THEN sales * 1000 ELSE 0 END)) AS Decem
+FROM
+    aws_salesdata.`saas-sales`
+Group By 
+	Year(`order date`), `contact name`
+ORDER BY `contact name`, year(`order date`);
+
 
     
